@@ -1,6 +1,8 @@
 <div>
     <div ng-controller="graphController as graph">
 
+        <p ng-show="firstname">Welcome {{firstname}}!</p>
+
         <div class="chart" 
         style="width:{{width}}px; height:{{height}}px;">
 
@@ -12,7 +14,7 @@
         style="height:{{bar.value / max * height }}px;
         width:{{width / graphData.length - 8 }}px;
         left:{{$index / graphData.length * width }}px">
-        <span>{{bar.label}}: {{bar.value}}</span>
+        <span>{{bar.label}}<br>{{bar.value}}</span>
     </div>
 </div>
 

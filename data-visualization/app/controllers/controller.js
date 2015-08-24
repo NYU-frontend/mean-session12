@@ -1,13 +1,27 @@
 app.controller('graphController', 
-    function($scope, $firebaseArray, FIREBASE_URL){
+    function($scope, $firebaseArray, FIREBASE_URL, $firebaseAuth, Authentication ){
 
-var ref = new Firebase(FIREBASE_URL + '/data');
-$scope.graphData = $firebaseArray(ref);
+        var ref = new Firebase(FIREBASE_URL + '/data');
+        $scope.graphData = $firebaseArray(ref);
 
-    $scope.width = 600;
-    $scope.height = 400;
-    $scope.yAxis = "Booty Haul";
-    $scope.xAxis = "2015";
+        $scope.width = 600;
+        $scope.height = 400;
+        $scope.yAxis = "Booty Haul";
+        $scope.xAxis = "2015";
+
+        var auth = $firebaseAuth(ref);
+        auth.$onAuth(function(authData){
+            if(authData !== null)
+            {
+                var userDataRef = new Firebase(FIREBASE_URL + '/users'); 
+                userDataRef.orderByChild("email").equalTo(authData.password.email).on("child_added", function(snapshot) {
+                    $scope.firstname = snapshot.val().firstname;
+                    $scope.$apply();
+                });
+            }
+        });
+
+    // $scope.firstname = "Daniel";
 
 //     $scope.data = [
 //     {
@@ -69,7 +83,7 @@ $scope.graphData = $firebaseArray(ref);
 
 
 
-    $scope.max = 342;
+$scope.max = 342;
 
     // var arrLength = $scope.data.length;
     // for (var i =0; i < arrLength; i++){
@@ -78,7 +92,7 @@ $scope.graphData = $firebaseArray(ref);
     //     }
     // }
             // console.log($scope.max);
-});
+        });
 
 
 

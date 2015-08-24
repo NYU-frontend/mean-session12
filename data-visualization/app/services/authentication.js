@@ -26,7 +26,19 @@ app.factory('Authentication', function(
                     password: user.password
                 });
             });
-        } // register
+        }, // register
+        authenticate: function(auth){
+            return auth.$onAuth(function(authData){
+                if(authData !== null)
+                {
+                    var userDataRef = new Firebase(FIREBASE_URL + '/users'); 
+                    userDataRef.orderByChild("email").equalTo(authData.password.email).on("child_added", function(snapshot) {
+                        $scope.firstname = snapshot.val().firstname;
+                        $scope.$apply();
+                    });
+                }
+            });
+        }
     };
 
     return myObject;
