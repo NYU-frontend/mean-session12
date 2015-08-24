@@ -1,4 +1,5 @@
-# mean-session11
+# mean-session12
 
 ##Homework
-* TBD
+* Prepare your final projects
+* Upload to Hieroku
